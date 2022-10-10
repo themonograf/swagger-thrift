@@ -1,0 +1,607 @@
+openapi: 3.0.3
+info:
+  title: Swagger Thrift Shop
+  contact:
+    email: apiteam@themonograf.com
+  version: 1.0.0
+servers:
+  - url: https://thrift-api.themonograf.com/api
+tags:
+  - name: Auth
+    description: Authorization
+  - name: User
+    description: Data User to access brankas
+  - name: Product Category
+    description: Data Category 
+    
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login to access brankas
+      description: Login to access brankas
+      operationId: login
+      requestBody:
+        description: Login to access brankas
+        content:
+          application/json:
+            schema:
+              required:
+                - username
+                - password
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: rrqvivi
+                password:
+                  type: string
+                  example: 123akuSayangKamu
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: "adskghfewior63yugdbhsakjfhds"
+                  data:
+                    $ref: '#/components/schemas/USER_DATA'
+        '404':
+          description: Username dan password harus diisi / Username atau password salah.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /users:
+    get:
+      tags:
+        - User
+      summary: Data User
+      description: Data User
+      operationId: getAllUser
+      parameters:
+        - name: page
+          in: query
+          description: Page
+          required: true
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Limit
+          required: true
+          schema:
+            type: integer
+            example: 10
+        - name: keyword
+          in: query
+          description: keyword for search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 10
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/USER_DATA"
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+    post:
+      tags:
+        - User
+      summary: Data User
+      description: Data User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - username
+                - password
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: rrqvivi
+                username:
+                  type: string
+                  example: rrqvivi
+                password:
+                  type: string
+                  example: 123akuSayangKamu
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+    put:
+      tags:
+        - User
+      summary: Data User
+      description: Data User
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - name
+                - username
+                - password
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: rrqvivi
+                username:
+                  type: string
+                  example: rrqvivi
+                password:
+                  type: string
+                  example: 123akuSayangKamu
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /users/{id}:
+    delete:
+      tags:
+        - User
+      summary: Data User
+      description: Data User
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of User
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+
+  /product-category:
+    get:
+      tags:
+        - Product Category
+      summary: Data Product Category
+      description: Data Product Category
+      operationId: getAllProductCategory
+      parameters:
+        - name: page
+          in: query
+          description: Page
+          required: true
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Limit
+          required: true
+          schema:
+            type: integer
+            example: 10
+        - name: keyword
+          in: query
+          description: keyword for search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 10
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CATEGORY_DATA"
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+    post:
+      tags:
+        - Product Category
+      summary: Data Product Category
+      description: Data Product Category
+      operationId: createProductCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - category
+              type: object
+              properties:
+                category:
+                  type: string
+                  example: cardigan
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+    put:
+      tags:
+        - Product Category
+      summary: Data Product Category
+      description: Data Product Category
+      operationId: updateProductCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - category
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                category:
+                  type: string
+                  example: cardigan
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /product-category/{id}:
+    delete:
+      tags:
+        - Product Category
+      summary: Data Product Category
+      description: Data Product Category
+      operationId: deletProductCategory
+      parameters:
+        - name: id
+          in: path
+          description: ID of Product Category
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Username dan password harus diisi / Username atau password salah.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /product-category/catalog:
+    get:
+      tags:
+        - Catalog
+      summary: Data Product Category Catalog
+      description: Data Product Category Catalog
+      operationId: getAllProductCategoryCatalog
+      parameters:
+        - name: keyword
+          in: query
+          description: keyword for search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CATEGORY_DATA"
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+          
+components:
+  schemas:
+    USER_DATA:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+        name:
+          type: string
+          example: "admin"
+        username:
+          type: string
+          example: "admin"
+        password:
+          type: string
+          example: 'enwklfnewkfgi3y82iedjkfnewfb'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          example: null
+    CATEGORY_DATA:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+        category:
+          type: string
+          example: "Cardigan"
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        deletedAt:
+          type: string
+          format: date-time
+          example: null
+    INVALID_INPUT_ERROR:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          description: Custom error code
+          type: string
+          format: string
+          example: Invalid input data format
+    INTERNAL_SERVER_ERROR:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        state_code:
+          description: Custom error code
+          type: string
+          format: string
+          example: INTERNAL_SERVER_ERROR
+        message:
+          description: Custom error code
+          type: string
+          format: string
+          example: Internal server error
