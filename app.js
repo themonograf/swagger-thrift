@@ -3,15 +3,10 @@ const express = require("express"),
   swaggerUi = require("swagger-ui-express");
 const app = express();
 const port = 3007;
+const swaggerOptions = require("./swaggerOptions.json");
 
 const options = {
-  definition: {
-    info: {
-      title: "ajg",
-      version: "1.0.0",
-      description: "Ini descriptionnya bgsd",
-    },
-  },
+  definition: swaggerOptions,
   apis: ["app.js"],
 };
 
