@@ -96,6 +96,8 @@ paths:
           required: false
           schema:
             type: string
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -154,6 +156,8 @@ paths:
                 password:
                   type: string
                   example: 123akuSayangKamu
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -211,6 +215,8 @@ paths:
                 password:
                   type: string
                   example: 123akuSayangKamu
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -255,6 +261,8 @@ paths:
           schema:
             type: integer
             example: 1
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -312,6 +320,8 @@ paths:
           required: false
           schema:
             type: string
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -362,6 +372,8 @@ paths:
                 category:
                   type: string
                   example: cardigan
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -411,6 +423,8 @@ paths:
                 category:
                   type: string
                   example: cardigan
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Successful operation
@@ -455,6 +469,8 @@ paths:
           schema:
             type: integer
             example: 1
+      security:
+        - bearerAuth: [] 
       responses:
         '200':
           description: Successful operation
@@ -605,3 +621,8 @@ components:
           type: string
           format: string
           example: Internal server error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

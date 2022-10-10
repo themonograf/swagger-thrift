@@ -146,6 +146,11 @@
               }
             }
           ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -235,6 +240,11 @@
               }
             }
           },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -321,6 +331,11 @@
               }
             }
           },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -386,6 +401,11 @@
                 "type": "integer",
                 "example": 1
               }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
             }
           ],
           "responses": {
@@ -474,6 +494,11 @@
               }
             }
           ],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -553,6 +578,11 @@
               }
             }
           },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -629,6 +659,11 @@
               }
             }
           },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -694,6 +729,11 @@
                 "type": "integer",
                 "example": 1
               }
+            }
+          ],
+          "security": [
+            {
+              "bearerAuth": []
             }
           ],
           "responses": {
@@ -912,6 +952,13 @@
               "example": "Internal server error"
             }
           }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
         }
       }
     }
