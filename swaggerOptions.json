@@ -801,7 +801,7 @@
         }
       }
     },
-    "/product-category/catalog": {
+    "/catalog/product-category": {
       "get": {
         "tags": [
           "Catalog"
@@ -845,6 +845,303 @@
           },
           "404": {
             "description": "Bad Input Parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INVALID_INPUT_ERROR"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/product": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Data Product Catalog",
+        "description": "Data Product Catalog",
+        "operationId": "getAllProductCatalog",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "keyword for search",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "product_category_id",
+            "in": "query",
+            "description": "product_category_id for search",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PRODUCT_DATA"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Input Parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INVALID_INPUT_ERROR"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/product/{slug}": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Data Product Catalog",
+        "description": "Data Product Catalog",
+        "operationId": "getProductCatalog",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "slug of Product Category",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "artette-breeze-cardigan-outer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/PRODUCT_DATA"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INVALID_INPUT_ERROR"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/reseller": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Data reseller Catalog",
+        "description": "Data reseller Catalog",
+        "operationId": "getResellerCatalog",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/RESELLER_DATA"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INVALID_INPUT_ERROR"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/login": {
+      "post": {
+        "tags": [
+          "Catalog"
+        ],
+        "summary": "Login to access catalog",
+        "description": "Login to access catalog",
+        "operationId": "loginCatalog",
+        "requestBody": {
+          "description": "Login to access catalog",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "rrqvivi"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123akuSayangKamu"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "adskghfewior63yugdbhsakjfhds"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/RESELLER_DATA"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Username dan password harus diisi / Username atau password salah.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1001,6 +1298,185 @@
           "image": {
             "type": "string",
             "example": "https://cdn.themonograf.com/images/1665665744_category_image.jpeg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": null
+          }
+        }
+      },
+      "PRODUCT_DATA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Artette Breeze Cardigan Outer"
+          },
+          "variant": {
+            "type": "string",
+            "example": "Black"
+          },
+          "description": {
+            "type": "string",
+            "example": "Kondisi: 90% Like new"
+          },
+          "productCategoryId": {
+            "type": "integer",
+            "example": 1
+          },
+          "price": {
+            "type": "integer",
+            "example": 50000
+          },
+          "slug": {
+            "type": "string",
+            "example": "artette-breeze-cardigan-outer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "deletedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": null
+          },
+          "product_images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PRODUCT_IMAGE_DATA"
+            }
+          },
+          "product_price": {
+            "$ref": "#/components/schemas/PRODUCT_PRICE_DATA"
+          }
+        }
+      },
+      "PRODUCT_IMAGE_DATA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 1
+          },
+          "isPrimary": {
+            "type": "boolean",
+            "example": true
+          },
+          "productId": {
+            "type": "integer",
+            "example": 1
+          },
+          "image": {
+            "type": "string",
+            "example": "https://cdn.themonograf.com/images/1665665744_category_image.jpeg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          }
+        }
+      },
+      "PRODUCT_PRICE_DATA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 1
+          },
+          "resellerId": {
+            "type": "integer",
+            "example": 1
+          },
+          "productId": {
+            "type": "integer",
+            "example": 1
+          },
+          "price": {
+            "type": "integer",
+            "example": 50000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-10-04T11:27:33.000Z"
+          }
+        }
+      },
+      "RESELLER_DATA": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Fitz Gerald"
+          },
+          "address": {
+            "type": "string",
+            "example": "Jl. Adress no 15"
+          },
+          "email": {
+            "type": "string",
+            "example": "fitz@themonograf.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "0821247XXX"
+          },
+          "tokopedia": {
+            "type": "string",
+            "example": "https://tokopedia.com/fitz"
+          },
+          "shopee": {
+            "type": "string",
+            "example": "https://shopee.com/fitz"
+          },
+          "instagram": {
+            "type": "string",
+            "example": "https://instagram.com/fitz"
+          },
+          "username": {
+            "type": "string",
+            "example": "fitz"
           },
           "createdAt": {
             "type": "string",
