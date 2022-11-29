@@ -696,6 +696,72 @@ paths:
               schema:
                 $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
                 
+  /catalog/reseller/price:
+    post:
+      tags:
+        - Catalog
+      summary: Data Product Price
+      description: Data Product Price
+      operationId: createUpdateProductPrice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - product_id
+                - price
+                - description
+                - enable
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  example: 1
+                price:
+                  type: integer
+                  example: 800000
+                description:
+                  type: string
+                  example: "default dari descriptin product"
+                enable:
+                  type: boolean
+                  example: true,
+                  description: "untuk menampilkan sesuai keinginan reseller"
+                id:
+                  type: integer
+                  example: 1
+                  description: "jika terisi data maka data akan menjadi update"
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
   /catalog/login:
     post:
       tags:
