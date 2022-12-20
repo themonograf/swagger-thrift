@@ -912,6 +912,15 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "type for product(all,reseller,catalog)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

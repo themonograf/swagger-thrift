@@ -588,6 +588,12 @@ paths:
           required: false
           schema:
             type: integer
+        - name: type
+          in: query
+          description: type for product(all,reseller,catalog)
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Successful operation
