@@ -1092,14 +1092,14 @@
         }
       }
     },
-    "/catalog/reseller/price": {
+    "/catalog/reseller/item": {
       "post": {
         "tags": [
           "Catalog"
         ],
-        "summary": "Data Product Price",
-        "description": "Data Product Price",
-        "operationId": "createUpdateProductPrice",
+        "summary": "Data Product Item",
+        "description": "Data Product Item",
+        "operationId": "createUpdateProductItem",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1108,7 +1108,10 @@
                   "product_id",
                   "price",
                   "description",
-                  "enable"
+                  "enable",
+                  "tokopedia",
+                  "shopee",
+                  "link"
                 ],
                 "type": "object",
                 "properties": {
@@ -1133,6 +1136,18 @@
                     "type": "integer",
                     "example": 1,
                     "description": "jika terisi data maka data akan menjadi update"
+                  },
+                  "tokopedia": {
+                    "type": "string",
+                    "example": "http://tokopedia.com"
+                  },
+                  "shopee": {
+                    "type": "string",
+                    "example": "http://shopee.com"
+                  },
+                  "link": {
+                    "type": "string",
+                    "example": "http://link.com"
                   }
                 }
               }
@@ -1477,8 +1492,8 @@
               "$ref": "#/components/schemas/PRODUCT_IMAGE_DATA"
             }
           },
-          "product_price": {
-            "$ref": "#/components/schemas/PRODUCT_PRICE_DATA"
+          "product_item": {
+            "$ref": "#/components/schemas/PRODUCT_ITEM_DATA"
           }
         }
       },
@@ -1514,7 +1529,7 @@
           }
         }
       },
-      "PRODUCT_PRICE_DATA": {
+      "PRODUCT_ITEM_DATA": {
         "type": "object",
         "properties": {
           "id": {
@@ -1533,6 +1548,18 @@
           "price": {
             "type": "integer",
             "example": 50000
+          },
+          "tokopedia": {
+            "type": "string",
+            "example": "http://tokopedia.com"
+          },
+          "shopee": {
+            "type": "string",
+            "example": "http://shopee.com"
+          },
+          "link": {
+            "type": "string",
+            "example": "http://link.com"
           },
           "createdAt": {
             "type": "string",
