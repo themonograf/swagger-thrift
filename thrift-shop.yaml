@@ -514,6 +514,41 @@ paths:
               schema:
                 $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
                 
+  /product-category/select-box:
+    get:
+      tags:
+        - Product Category
+      summary: Data Select Product Category
+      description: Data Select Product Category
+      operationId: getSelectProductCategory
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CATEGORY_DATA_FILTER"
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
   /product:
     get:
       tags:
@@ -975,7 +1010,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/CATEGORY_DATA"
+                      $ref: "#/components/schemas/CATEGORY_DATA_FILTER"
         '404':
           description: Bad Input Parameters.
           content:
@@ -1494,6 +1529,19 @@ components:
           type: string
           format: date-time
           example: null
+    CATEGORY_DATA_FILTER:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+        category:
+          type: string
+          example: "Cardigan"
+        image:
+          type: string
+          example: "https://cdn.themonograf.com/images/1665665744_category_image.jpeg"
     PRODUCT_DATA:
       type: object
       properties:
