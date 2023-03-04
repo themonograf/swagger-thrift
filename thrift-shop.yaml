@@ -23,6 +23,8 @@ tags:
     description: Upload Data
   - name: Select Box
     description: Data Select Box
+  - name: Order
+    description: Data Order
     
 paths:
   /auth/login:
@@ -1862,6 +1864,261 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /reseller/select-box:
+    get:
+      tags:
+        - Select Box
+      summary: Data Select Reseller
+      description: Data Select Reseller
+      operationId: getSelectReseller
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int
+                          example: 1
+                        name:
+                          type: string
+                          example: "admin"
+                        username:
+                          type: string
+                          example: "admin"
+                        
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /order:
+    get:
+      tags:
+        - Order
+      summary: Data Order
+      description: Data Order
+      operationId: getAllOrder
+      parameters:
+        - name: page
+          in: query
+          description: Page
+          required: true
+          schema:
+            type: integer
+            example: 0
+        - name: limit
+          in: query
+          description: Limit
+          required: true
+          schema:
+            type: integer
+            example: 10
+        - name: reseller_id
+          in: query
+          description: reseller id
+          required: false
+          schema:
+            type: integer
+        - name: status
+          in: query
+          description: status
+          required: false
+          schema:
+            type: integer
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 10
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/ORDER_DATA"
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /order/approve/{id}:
+    post:
+      tags:
+        - Order
+      summary: Approve Order
+      description: Approve Order
+      operationId: approveOrder
+      parameters:
+        - name: id
+          in: path
+          description: ID of Order
+          required: true
+          schema:
+            type: integer
+            example: 1
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /order/decline/{id}:
+    post:
+      tags:
+        - Order
+      summary: Decline Order
+      description: Decline Order
+      operationId: declineOrder
+      parameters:
+        - name: id
+          in: path
+          description: ID of Order
+          required: true
+          schema:
+            type: integer
+            example: 1
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
+                
+  /order/success/{id}:
+    post:
+      tags:
+        - Order
+      summary: Success Order
+      description: Success Order
+      operationId: successOrder
+      parameters:
+        - name: id
+          in: path
+          description: ID of Order
+          required: true
+          schema:
+            type: integer
+            example: 1
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data: 
+                    type: array
+                    items:
+                      type: string
+                    maxItems: 0
+        '404':
+          description: Bad Input Parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INVALID_INPUT_ERROR"
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/INTERNAL_SERVER_ERROR"
           
 components:
   schemas:
@@ -1931,6 +2188,51 @@ components:
         image:
           type: string
           example: "https://cdn.themonograf.com/images/1665665744_category_image.jpeg"
+    ORDER_DATA:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        productId:
+          type: integer
+          example: 1
+        resellerId:
+          type: integer
+          example: 1
+        customerName:
+          type: string
+          example: "Fitz"
+        customerPhonenumber:
+          type: string
+          example: "08784357836"
+        customerAddress:
+          type: string
+          example: "Bogor"
+        basicPrice:
+          type: integer
+          example: 50000
+        sellPrice:
+          type: integer
+          example: 50000
+        resellerCommision:
+          type: integer
+          example: 50000
+        status:
+          type: integer
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2022-10-04T11:27:33.000Z'
+        product:
+          $ref: "#/components/schemas/PRODUCT_DATA"
+        reseller:
+          $ref: "#/components/schemas/RESELLER_DATA"
     PRODUCT_DATA:
       type: object
       properties:
